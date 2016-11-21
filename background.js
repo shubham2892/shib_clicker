@@ -1,21 +1,38 @@
-chrome.app.runtime.onLaunched.addListener(function() {
-  // Tell your app what to launch and how.
-  chrome.app.window.create('window.html', {
-    'outerBounds': {
-      'width': 400,
-      'height': 500
-    }
-  });
 
- //  chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
- //    alert(changeInfo.url);
- // });
+
+ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+  //  alert("tab updated");
+   if (tab.url !== null){
+
+     shib_url = "shib.ncsu.edu";
+
+     if (tab.url.indexOf(shib_url) !== -1){
+      //  console.log("starting to send message");
+       chrome.tabs.sendMessage(tabId, {greeting: "hello"}, function(response) {
+         console.log("Message Sent");
+       });
+
+     }
+
+  //  chrome.tabs.sendMessage(tabId, {greeting: "hello"}, function(response) {
+    //  console.log("Message Sent");
+  //  });
+ }
+
+  // chrome.tabs.sendMessage(activeTab.id, {"message": "clicked_browser_action"});
+
 
  });
+ // chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+  // chrome.tabs.sendMessage(tabs[0].id, {greeting: "hello"}, function(response) {
+    // console.log("Behekjdk");
+  // });
+// });
 
-chrome.tabs.onCreated.addListener(function (tab) {
-    alert("Yo Yo");
-  });
+
+// chrome.tabs.onCreated.addListener(function (tab) {
+//     alert("Yo Yo");
+//   });
 
 // chrome.browserAction.onClicked.addListener(function(tab) {
   // alert("yo yo");
